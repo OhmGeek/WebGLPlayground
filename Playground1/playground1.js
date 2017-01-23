@@ -1,5 +1,5 @@
 var gl;
-var shaders = {};
+var shaders = [];
 
 // Functions
 function main() {
@@ -53,7 +53,7 @@ function initShaders() {
 function getShader(gl,id,type) {
 	// get the shader from the shaders object
 	var shaderScript = shaders[id];
-	
+
 	if(!shaderScript) {
 		return null; //error if no shader found
 	}
@@ -70,4 +70,36 @@ function getShader(gl,id,type) {
 		}
 	}
 	shader = gl.createShader(type);
+	gl.shaderSource(shader,shaderScript.source);
+	gl.compileShader(shader);
+
+	if(!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+		console.log("Error occured compiling shaders " + gl.getShaderInfoLog(shader));
+		gl.deleteShader(shader);
+		return null;
+	}
+	return shader;
+}
+
+
+function createFSShader() {
+	var source = "void main(void) {
+		gl_FragColor = vec4(1.0,1.0,1.0,1.0);
+
+	}";
+	var type = "x-shader/x-fragment";
+	shaders.push({'source': source, 'type':type});
+}
+
+function createVSController() {
+	var source = "attribute vec3 aVertexPosition;
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+
+	void main(void) {
+		gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition,1.0);
+	}";
+
+	var type="x-shader/x-vertex";
+	shaders.push({'source': source, 'type':type});
 }
