@@ -14,7 +14,7 @@ function main() {
 	gl.clearColor(0.0,0.0,0.0,1.0);
 	gl.enable(gl.DEPTH_TEST);
 	gl.depthFunc(gl.LEQUAL);
-	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);i
+	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 }
 
 function initWebGL(canvas) {
@@ -83,22 +83,13 @@ function getShader(gl,id,type) {
 
 
 function createFSShader() {
-	var source = "void main(void) {
-		gl_FragColor = vec4(1.0,1.0,1.0,1.0);
-
-	}";
+	var source = "void main(void) {gl_FragColor = vec4(1.0,1.0,1.0,1.0);}";
 	var type = "x-shader/x-fragment";
 	shaders.push({'source': source, 'type':type});
 }
 
 function createVSController() {
-	var source = "attribute vec3 aVertexPosition;
-	uniform mat4 uMVMatrix;
-	uniform mat4 uPMatrix;
-
-	void main(void) {
-		gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition,1.0);
-	}";
+	var source = "attribute vec3 aVertexPosition;uniform mat4 uMVMatrix;uniform mat4 uPMatrix;void main(void) {gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition,1.0);}";
 
 	var type="x-shader/x-vertex";
 	shaders.push({'source': source, 'type':type});
