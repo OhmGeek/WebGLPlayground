@@ -94,3 +94,19 @@ function createVSController() {
 	var type="x-shader/x-vertex";
 	shaders.push({'source': source, 'type':type});
 }
+
+var horizAspect = 480.0 / 640.0;
+
+function initBuffers() {
+	squareVerticesBuffer = gl.createBuffer();
+	gl.bindBuffer(gl.ARRAY_BUFFER,squareVerticesBuffer);
+
+	var vertices = [
+			1.0,1.0,0.0,
+			-1.0,1.0,0.0,
+			1.0,-1.0,0.0,
+			-1.0,-1.0,0.0
+	];
+
+	gl.bufferData(g.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+}
